@@ -19,6 +19,7 @@ class CreateDisciplinasHabilidadesRelTable extends Migration
             $table->unsignedBigInteger('id_habilidades');
 
             $table->foreign('id_disciplinas')->references('id')->on('disciplinas')->onDelete('CASCADE');
+            $table->foreign('id_habilidades')->references('id')->on('habilidades')->onDelete('CASCADE');
         });
     }
 
