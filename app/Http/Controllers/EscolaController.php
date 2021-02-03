@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Escola;
 use Illuminate\Http\Request;
 
 class EscolaController extends Controller
@@ -13,7 +14,8 @@ class EscolaController extends Controller
      */
     public function index()
     {
-        //
+        $escolas = Escola::paginate(10);
+        return view('escolas.index', compact('escolas'));
     }
 
     /**
@@ -23,7 +25,8 @@ class EscolaController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('escolas.create');
     }
 
     /**
@@ -34,7 +37,15 @@ class EscolaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        
+        $response = Escola::create($data);
+
+        if($response){
+            return redirect()->route("escolas.index")->with("msg-ok", "Escola cadastrada com sucesso!");
+        }else{
+            return redirect()->back()->with("msg-erro", "Erro ao cadastrar Escola!");
+        }
     }
 
     /**
@@ -56,7 +67,13 @@ class EscolaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $escola = Escola::find($id);
+        if($escola){
+            return view('escolas.edit', compact('escola'));
+        }else{
+            return redirect()->route('escolas.index')->with('msg-erro', "Escola de código {$id} não encontrada!");
+        }
+        
     }
 
     /**
@@ -68,7 +85,16 @@ class EscolaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $escola = Escola::find($id);
+
+        $resp = $escola->update($data);
+        
+        if($resp){
+            return redirect()->route('escolas.index')->with('msg-ok', "Escola editada com sucesso!");
+        }else{
+            return redirect()->back()->with('msg-erro', "Erro ao editar!");
+        }
     }
 
     /**
@@ -77,8 +103,12 @@ class EscolaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Escola $escola)
     {
-        //
+        if($escola->delete()){
+            return redirect()->route('escolas.index')->with('msg-ok', "Escola deletada com sucesso!");
+        }else{
+            return redirect()->route('escolas.index')->with('msg-erro', "Erro ao deletar Escola!");
+        }
     }
 }
