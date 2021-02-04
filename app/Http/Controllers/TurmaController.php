@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Escola;
+use App\Models\Turma;
 use Illuminate\Http\Request;
 
 class TurmaController extends Controller
@@ -13,7 +15,8 @@ class TurmaController extends Controller
      */
     public function index()
     {
-        //
+        $turmas = Turma::paginate(10);
+        return view('turmas.index', compact('turmas'));
     }
 
     /**
@@ -23,7 +26,8 @@ class TurmaController extends Controller
      */
     public function create()
     {
-        //
+        $escolas = Escola::all();
+        return view('turmas.create', compact('escolas'));
     }
 
     /**
@@ -34,7 +38,19 @@ class TurmaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $escola = Escola::find($request->escola);
+        if(isset($escola)){
+            $dados = $request->all();
+            $resp = $escola->turmas()->create($dados);
+
+            if($resp){
+                return redirect()->route('turmas.index')->with("msg-ok", "Turma cadastrada com sucesso!");
+            }
+        }else{
+            return redirect()->route('turmas.create')->with("msg-erro", "Erro, defina a Escola que a turma pertence!");
+        }
+        
     }
 
     /**
@@ -56,7 +72,14 @@ class TurmaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $turma = Turma::find($id);
+        if(isset($turma)){
+            $escolas = Escola::all();
+
+            return view('turmas.edit', compact('turma', 'escolas'));
+        }else{
+            return redirect()->route('turmas.index')->with('msg-erro', 'Código da Turma inválido!');
+        }
     }
 
     /**
@@ -68,7 +91,21 @@ class TurmaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $turma = Turma::find($id);
+        if(isset($turma)){
+            $dados = $request->all();
+            //Só irá fazer o processo se a escola nova for diferente da cadastrada
+            if($turma->id_escolas != $dados['escola']){
+                $turma->escolas()->dissociate();
+                $escola = Escola::find($dados['escola']);
+                $turma->escolas()->associate($escola);
+            }      
+
+            $resp = $turma->update($dados);
+            if($resp){
+                return redirect()->route('turmas.index')->with('msg-ok', "Turma atualizada com sucesso!");
+            }
+        }
     }
 
     /**
@@ -77,8 +114,13 @@ class TurmaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Turma $turma)
     {
-        //
+       $resp = $turma->delete();
+       if($resp){
+            return redirect()->route('turmas.index')->with('msg-ok', 'Turma removida com sucesso!');
+       }else{
+            return redirect()->route('turmas.index')->with('msg-erro', 'Erro ao remover Turma!');
+       }
     }
 }

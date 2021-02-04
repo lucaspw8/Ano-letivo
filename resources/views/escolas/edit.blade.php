@@ -33,12 +33,12 @@
                 <form action={{route('escolas.update', $escola->id)}} method="post">
                     <div class="form-group">
                         <label for="nome">Nome:</label>
-                        <input type="text" class="form-control" name="nome" id="nome" value="{{$escola->nome}} {{old('nome')}}"> 
+                        <input type="text" class="form-control" name="nome" id="nome" value="{{(old('nome')) !== null ? old('nome') : $escola->nome}}"> 
                     </div>
 
                     <div class="form-group mb-2">
                         <label for="descricao">Descricao:</label>
-                        <textarea name="descricao" id="descricao" class="form-control">{{$escola->descricao}} {{old('descricao')}}</textarea>
+                        <textarea name="descricao" id="descricao" class="form-control">{{(old('descricao')) !== null ? old('descricao') : $escola->descricao}}</textarea>
                     </div>
                     @csrf
                     @method("PUT")
