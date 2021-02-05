@@ -49,7 +49,7 @@
                             <option value="">Defina a escola...</option>
                             @if (isset($escolas))
                                 @foreach ($escolas as $escola)
-                                    <option value={{$escola->id}} @if ($escola->id == $turma->id_escolas) selected @endif> {{$escola->nome}}</option>
+                                    <option value={{$escola->id}} {{(old('escola')) == $escola->id ? "selected" :""}} @if ($escola->id == $turma->id_escolas) selected @endif> {{$escola->nome}}</option>
                                 @endforeach
                             @endif
                         </select>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EscolaRequest;
 use App\Models\Escola;
 use Illuminate\Http\Request;
 
@@ -32,10 +33,10 @@ class EscolaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EscolaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EscolaRequest $request)
     {
         $data = $request->all();
         
@@ -79,11 +80,11 @@ class EscolaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EscolaRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EscolaRequest $request, $id)
     {
         $data = $request->all();
         $escola = Escola::find($id);

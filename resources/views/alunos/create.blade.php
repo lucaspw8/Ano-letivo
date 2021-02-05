@@ -1,14 +1,14 @@
 @extends('templates.principal')
-@section('titlePage', 'Nova Turma')
+@section('titlePage', 'Novo Aluno')
 
 @section('content')
     <div class="container">
         <div class="row mt-1">
             <div class="col-2">
-                <a class="btn btn-outline" href={{route('turmas.index')}}><i class="bi bi-arrow-90deg-left p-1"></i>Voltar</a>
+                <a class="btn btn-outline" href={{route('alunos.index')}}><i class="bi bi-arrow-90deg-left p-1"></i>Voltar</a>
             </div>
             <div class="col">
-                <h1>Cadastro de Turma</h1>
+                <h1>Cadastro de Aluno</h1>
             </div>
          
         </div>
@@ -37,19 +37,24 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-md-8"> 
-                <form action={{route('turmas.store')}} method="post">
+                <form action={{route('alunos.store')}} method="post">
                     <div class="form-group">
                         <label for="nome">Nome:</label>
                         <input type="text" class="form-control" name="nome" id="nome" value={{old('nome')}}>
                     </div>
 
                     <div class="form-group">
-                        <label for="escola">Escola:</label>
-                        <select class="form-control" name="escola" id="escola">
-                            <option value="">Defina a escola...</option>
-                            @if (isset($escolas))
-                                @foreach ($escolas as $escola)
-                                    <option value={{$escola->id}} {{(old('escola')) == $escola->id ? "selected" :""}} > {{$escola->nome}}</option>
+                        <label for="matricula">Matrícula:</label>
+                        <input type="text" class="form-control" name="matricula" id="matricula" value={{old('matricula')}}>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="turma">Turma:</label>
+                        <select class="form-control" name="turma" id="turma">
+                            <option value="">Defina a turma...</option>
+                            @if (isset($turmas))
+                                @foreach ($turmas as $turma)
+                                    <option value={{$turma->id}} {{(old('turma')) == $turma->id ? "selected" :""}}>{{$turma->nome}} ({{$turma->escolas->nome}})</option>
                                 @endforeach
                             @endif
                         </select>

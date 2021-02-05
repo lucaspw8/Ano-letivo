@@ -23,6 +23,7 @@
               <a class="nav-link active" aria-current="page" href={{route('index')}}>Home</a>
               <a class="nav-link active" href={{ route('escolas.index') }}>Escolas</a>
               <a class="nav-link active" href={{route('turmas.index')}}>Turmas</a>
+              <a class="nav-link active" href={{route('alunos.index')}}>Alunos</a>
               <a class="nav-link active" href={{route('sobre')}}>Sobre</a>
             </div>
           </div>

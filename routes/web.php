@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EscolaController;
 use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\AlunoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,3 +39,12 @@ Route::post('/turmas', [TurmaController::class, 'store'])->name("turmas.store");
 Route::get('/turmas/edit/{id}', [TurmaController::class, 'edit'])->name('turmas.edit');
 Route::put('/turmas/{id}', [TurmaController::class, 'update'])->name('turmas.update');
 Route::delete('/turmas/{turma}', [TurmaController::class, 'destroy'])->name('turmas.destroy');
+
+//Rotas de Alunos
+Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index');
+Route::get('/alunos/create', [AlunoController::class, 'create'])->name('alunos.create');
+Route::get('/alunos/show/{id}', [AlunoController::class, 'show'])->name('alunos.show');
+Route::post('/alunos', [AlunoController::class, 'store'])->name('alunos.store');
+Route::get('/alunos/edit/{id}', [AlunoController::class, 'edit'])->name('alunos.edit');
+Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.update');
+Route::delete('/alunos/{aluno}', [AlunoController::class, 'destroy'])->name('alunos.destroy');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TurmaRequest;
 use App\Models\Escola;
 use App\Models\Turma;
 use Illuminate\Http\Request;
@@ -33,10 +34,10 @@ class TurmaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\TurmaRequest; $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TurmaRequest $request)
     {
         
         $escola = Escola::find($request->escola);
@@ -85,11 +86,11 @@ class TurmaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\TurmaRequest;  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TurmaRequest $request, $id)
     {
         $turma = Turma::find($id);
         if(isset($turma)){
